@@ -13,7 +13,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
   return (
     <DropdownMenu>
       <SignedIn>
-        <UserButton afterSignOutUrl="/login" />
+        <UserButton afterSignOutUrl="/auth/signin" />
       </SignedIn>
     </DropdownMenu>
   );

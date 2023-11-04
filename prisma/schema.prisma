@@ -19,3 +19,50 @@ model Post {
 
     @@index([name])
 }
+
+model User {
+    id          String @id @default(cuid())
+    name        String
+    clerkUserId String @unique
+
+    email String   @unique
+    phone String?  @unique
+    dob   DateTime
+
+    wallet_address String? @db.VarChar(100)
+
+    country     String? @db.VarChar(50)
+    region      String? @db.VarChar(150)
+    city        String? @db.VarChar(150)
+    postal_code String? @db.VarChar(20)
+    address     String? @db.Text
+
+    nationalIdType String?
+    nationalId     String?
+
+    isProfileCreated  Boolean @default(false)
+    isProfileVerified Boolean @default(false)
+
+    entires PassportEntry[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model PassportEntry {
+    id String @id @default(cuid())
+
+    validFrom DateTime
+    validTill DateTime
+
+    entryDate DateTime
+    exitDate  DateTime
+
+    User   User   @relation(fields: [userId], references: [id])
+    userId String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([userId])
+}

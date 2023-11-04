@@ -49,6 +49,9 @@ export type MarketingConfig = {
 
 export type DashboardConfig = {
   mainNav: MainNavItem[];
+  userSidebarNav: SidebarNavItem[];
+  adminSidebarNav: SidebarNavItem[];
+
   sidebarNav: SidebarNavItem[];
   sidebarNavBidder: SidebarNavItem[];
 };

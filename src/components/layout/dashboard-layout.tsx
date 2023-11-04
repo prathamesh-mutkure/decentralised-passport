@@ -5,9 +5,13 @@ import { SiteFooter } from "@/components/site-footer";
 import { UserAccountNav } from "@/components/user-account-nav";
 import DashboardSkeleton from "../ui/dashboard-skeleton";
 import { cn } from "@/lib/utils";
+import { api } from "~/utils/api";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { toast } from "@/components/ui/use-toast";
 
 interface DashboardLayoutProps {
-  type: "lister" | "bidder" | "none" | "empty";
+  type: "user" | "admin" | "empty" | "none";
   loading: boolean;
   heading: string;
   text: string;
@@ -23,6 +27,22 @@ export default function DashboardLayout({
   buttonLabel,
   heading,
 }: DashboardLayoutProps) {
+  const router = useRouter();
+  const { data } = api.user.isUserCreated.useQuery();
+
+  useEffect(() => {
+    if (router.pathname === "/dashboard/user/profile") return;
+
+    if (!data?.isProfileCreated) {
+      void router.replace("/dashboard/user/profile");
+
+      toast({
+        title: "Profile not created",
+        type: "foreground",
+      });
+    }
+  }, [router, data]);
+
   return (
     <div className="flex min-h-screen flex-col space-y-6">
       <header className="sticky top-0 z-40 border-b bg-background">
@@ -55,9 +75,9 @@ export default function DashboardLayout({
             items={
               type === "none" || type === "empty"
                 ? []
-                : type === "lister"
-                ? dashboardConfig.sidebarNav
-                : dashboardConfig.sidebarNavBidder
+                : type === "user"
+                ? dashboardConfig.userSidebarNav
+                : dashboardConfig.adminSidebarNav
             }
           />
         </aside>

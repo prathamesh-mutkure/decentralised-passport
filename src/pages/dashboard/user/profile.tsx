@@ -7,6 +7,7 @@ import { Icons } from "@/components/icons";
 import Link from "next/link";
 import Head from "next/head";
 import DashboardLayout from "~/components/layout/dashboard-layout";
+import { UserProfileForm } from "~/components/forms/user-profile-form";
 
 export default function UserProfilePage() {
   return (
@@ -23,7 +24,7 @@ export default function UserProfilePage() {
         buttonLabel="Profile"
       >
         <DashboardShell>
-          <DashboardHeader heading="User Profile" text="User Profile">
+          <DashboardHeader heading="User Details" text="Enter all the details">
             <Link href="/dashboard/user/profile">
               <Button variant="outline">
                 <Icons.edit className="mr-2 h-4 w-4" />
@@ -32,6 +33,8 @@ export default function UserProfilePage() {
             </Link>
           </DashboardHeader>
         </DashboardShell>
+
+        <UserProfileForm />
       </DashboardLayout>
     </>
   );

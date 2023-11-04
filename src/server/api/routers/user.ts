@@ -42,7 +42,7 @@ export const userRouter = createTRPCRouter({
     .input(
       z.object({
         dob: z.date(),
-        phone: z.string().min(13),
+        phone: z.string().min(10).max(13),
 
         country: z.string().min(1),
         region: z.string().min(1),

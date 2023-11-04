@@ -28,12 +28,12 @@ export default function DashboardLayout({
   heading,
 }: DashboardLayoutProps) {
   const router = useRouter();
-  const { data } = api.user.isUserCreated.useQuery();
+  const { data, isSuccess } = api.user.isUserCreated.useQuery();
 
   useEffect(() => {
     if (router.pathname === "/dashboard/user/profile") return;
 
-    if (!data?.isProfileCreated) {
+    if (isSuccess && !data?.isProfileCreated) {
       void router.replace("/dashboard/user/profile");
 
       toast({
@@ -41,7 +41,7 @@ export default function DashboardLayout({
         type: "foreground",
       });
     }
-  }, [router, data]);
+  }, [router, isSuccess, data]);
 
   return (
     <div className="flex min-h-screen flex-col space-y-6">

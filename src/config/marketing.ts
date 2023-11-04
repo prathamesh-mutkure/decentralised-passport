@@ -8,22 +8,13 @@ export const marketingConfig: MarketingConfig = {
       disabled: true,
     },
     {
-      title: "Features",
-      href: "/#features",
-    },
-    {
-      title: "Featured Contracts",
-      href: "/#featureContract",
-    },
-    {
-      title: "Blog",
-      href: "/blog",
+      title: "Problem",
+      href: "/#problem",
       disabled: true,
     },
     {
-      title: "Documentation",
-      href: "/docs",
-      disabled: true,
+      title: "Solution",
+      href: "/#solution",
     },
   ],
 };

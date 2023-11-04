@@ -13,8 +13,18 @@ export const dashboardConfig: DashboardConfig = {
   ],
   userSidebarNav: [
     {
-      title: "Dashboard",
+      title: "Digital Passport",
       href: "/dashboard/user/",
+      icon: "home",
+    },
+    {
+      title: "Visa Applications",
+      href: "/dashboard/user/visa",
+      icon: "home",
+    },
+    {
+      title: "Apply for visa",
+      href: "/dashboard/user/visa/form",
       icon: "home",
     },
     {

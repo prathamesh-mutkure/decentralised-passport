@@ -43,18 +43,21 @@ export default function UserDashboardPage() {
   return (
     <>
       <Head>
-        <title>User Dashboard</title>
+        <title>Digital Passport</title>
       </Head>
 
       <DashboardLayout
         type="user"
         loading={false}
-        heading="Dashboard"
-        text="User Dashboard"
+        heading="Digital Passport"
+        text="This is a digital passport"
         buttonLabel="Profile"
       >
         <DashboardShell>
-          <DashboardHeader heading="User Dashboard" text="User Dashboard">
+          <DashboardHeader
+            heading="Digital Passport"
+            text="This is a digital passport"
+          >
             <Link href="/dashboard/user/profile">
               <Button variant="outline">
                 <Icons.edit className="mr-2 h-4 w-4" />
@@ -64,7 +67,7 @@ export default function UserDashboardPage() {
           </DashboardHeader>
         </DashboardShell>
 
-        <Card className="pt-6">
+        <Card className="mt-12 pt-6">
           <CardContent>
             <div className="grid grid-cols-3 gap-8">
               <div>

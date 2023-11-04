@@ -43,7 +43,8 @@ model User {
     isProfileCreated  Boolean @default(false)
     isProfileVerified Boolean @default(false)
 
-    entires PassportEntry[]
+    entires         PassportEntry[]
+    VisaApplication VisaApplication[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -52,6 +53,7 @@ model User {
 model PassportEntry {
     id String @id @default(cuid())
 
+    country   String
     validFrom DateTime
     validTill DateTime
 
@@ -61,8 +63,38 @@ model PassportEntry {
     User   User   @relation(fields: [userId], references: [id])
     userId String
 
+    visaApplication   VisaApplication @relation(fields: [visaApplicationId], references: [id])
+    visaApplicationId String          @unique
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+
+    @@index([userId])
+}
+
+enum VisaApplicationStatus {
+    DRAFT
+    SUBMITTED
+    ACCEPTED
+    REJECTED
+}
+
+model VisaApplication {
+    id String @id @default(cuid())
+
+    country       String
+    entryDate     DateTime
+    exitDate      DateTime
+    supportingDoc String
+
+    status VisaApplicationStatus @default(SUBMITTED)
+
+    User   User   @relation(fields: [userId], references: [id])
+    userId String
+
+    createdAt     DateTime       @default(now())
+    updatedAt     DateTime       @updatedAt
+    PassportEntry PassportEntry?
 
     @@index([userId])
 }

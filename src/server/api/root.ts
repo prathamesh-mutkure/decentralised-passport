@@ -1,6 +1,7 @@
 import { userRouter } from "~/server/api/routers/user";
 import { createTRPCRouter } from "~/server/api/trpc";
 import { visaApplicationRouter } from "./routers/visaApplication";
+import { passportRouter } from "./routers/passport";
 
 /**
  * This is the primary router for your server.
@@ -10,6 +11,7 @@ import { visaApplicationRouter } from "./routers/visaApplication";
 export const appRouter = createTRPCRouter({
   user: userRouter,
   visaApplication: visaApplicationRouter,
+  passportRouter: passportRouter,
 });
 
 // export type definition of API

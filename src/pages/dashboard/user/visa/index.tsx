@@ -17,8 +17,89 @@ import {
 import Link from "next/link";
 import Head from "next/head";
 import DashboardLayout from "~/components/layout/dashboard-layout";
-import { api } from "~/utils/api";
+import { type RouterOutputs, api } from "~/utils/api";
 import { formatDate } from "~/lib/utils";
+import { toast } from "~/components/ui/use-toast";
+
+type VisaApplicationType =
+  RouterOutputs["visaApplication"]["getVisaApplications"][number];
+
+export function VisaApplicationTable({
+  items,
+  admin = false,
+}: {
+  items: VisaApplicationType[];
+  admin?: boolean;
+}) {
+  const ctx = api.useUtils();
+  const { mutate, isLoading } =
+    api.visaApplication.takeDecesionOnApplication.useMutation({
+      onSuccess: () => {
+        void ctx.visaApplication.invalidate();
+      },
+      onError: (e) => {
+        const errorMessage = e.data?.zodError?.fieldErrors.content;
+
+        errorMessage?.forEach((msg) => {
+          toast({
+            title: "Error",
+            description: msg ?? "Error",
+          });
+        });
+      },
+    });
+
+  return (
+    <Table>
+      <TableCaption>A list of all available bids.</TableCaption>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Visiting Country</TableHead>
+          <TableHead>Entry</TableHead>
+          <TableHead>Exit</TableHead>
+          <TableHead>Submitted On</TableHead>
+          <TableHead>Status</TableHead>
+          <TableHead className="text-right">Actions</TableHead>
+        </TableRow>
+      </TableHeader>
+
+      <TableBody>
+        {items?.map(
+          ({ country, entryDate, exitDate, status, createdAt, id }) => (
+            <TableRow key={id}>
+              <TableCell className="font-medium">{country}</TableCell>
+              <TableCell>{formatDate(entryDate)}</TableCell>
+              <TableCell>{formatDate(exitDate)}</TableCell>
+              <TableCell>{formatDate(createdAt)}</TableCell>
+              <TableCell>{status}</TableCell>
+              <TableCell className="gap-1 text-right">
+                <Link href={`/visaapplication/${id}`} className="mr-2">
+                  <Button className="rounded-full">
+                    <Icons.info className="h-4 w-4" />
+                  </Button>
+                </Link>
+
+                {admin && (
+                  <Button className="rounded-full" disabled={isLoading}>
+                    <Icons.check
+                      className="h-4 w-4"
+                      onClick={() => {
+                        mutate({
+                          visaApplicaitionId: id,
+                          accept: true,
+                        });
+                      }}
+                    />
+                  </Button>
+                )}
+              </TableCell>
+            </TableRow>
+          ),
+        )}
+      </TableBody>
+    </Table>
+  );
+}
 
 export default function UserProfilePage() {
   const { data, isLoading } =
@@ -51,40 +132,7 @@ export default function UserProfilePage() {
           </DashboardHeader>
         </DashboardShell>
 
-        <Table>
-          <TableCaption>A list of all available bids.</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Visiting Country</TableHead>
-              <TableHead>Entry</TableHead>
-              <TableHead>Exit</TableHead>
-              <TableHead>Submitted On</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-
-          <TableBody>
-            {data?.map(
-              ({ country, entryDate, exitDate, status, createdAt, id }) => (
-                <TableRow key={id}>
-                  <TableCell className="font-medium">{country}</TableCell>
-                  <TableCell>{formatDate(entryDate)}</TableCell>
-                  <TableCell>{formatDate(exitDate)}</TableCell>
-                  <TableCell>{formatDate(createdAt)}</TableCell>
-                  <TableCell>{status}</TableCell>
-                  <TableCell className="text-right">
-                    <Link href={`/visaapplication/${id}`} className="mr-2">
-                      <Button className="rounded-full">
-                        <Icons.info className="h-4 w-4" />
-                      </Button>
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              ),
-            )}
-          </TableBody>
-        </Table>
+        <VisaApplicationTable items={data ?? []} />
       </DashboardLayout>
     </>
   );

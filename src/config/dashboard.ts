@@ -38,7 +38,13 @@ export const dashboardConfig: DashboardConfig = {
       icon: "home",
     },
   ],
-  adminSidebarNav: [],
+  adminSidebarNav: [
+    {
+      title: "Visa Applications",
+      href: "/dashboard/user/visa",
+      icon: "home",
+    },
+  ],
   sidebarNav: [],
   sidebarNavBidder: [],
 };

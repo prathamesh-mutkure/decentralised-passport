@@ -1,18 +1,12 @@
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
-import { Icons } from "~/components/icons";
+
 import RotatingText from "~/components/landing/rotating-text";
 import MainLayout from "~/components/layout/main-layout";
 import { Button } from "~/components/ui/button";
 import { siteConfig } from "~/config/site";
-import { cn } from "~/lib/utils";
-
-import { api } from "~/utils/api";
 
 export default function Home() {
-  const hello = api.post.hello.useQuery({ text: "from tRPC" });
-
   return (
     <>
       <Head>

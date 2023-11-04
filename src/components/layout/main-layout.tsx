@@ -8,7 +8,14 @@ import { MainNav } from "@/components/main-nav";
 import { SiteFooter } from "@/components/site-footer";
 
 import { useRouter } from "next/router";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import {
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+  useAuth,
+} from "@clerk/nextjs";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -16,16 +23,6 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const router = useRouter();
-
-  const handleLogin = async () => {
-    // wallet.signIn()
-    // router.push("/login");
-  };
-
-  const handleLogout = async () => {
-    // wallet.signOut()
-  };
-
   const [color, setcolor] = useState(false);
 
   const changeNavBg = () => {
@@ -41,7 +38,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   }, []);
 
   return (
-    <div className="min-h-scree flex flex-col">
+    <div className="flex min-h-screen flex-col">
       <header
         style={color ? { backgroundColor: "rgba(0,0,0,0.4)" } : {}}
         className="fixed left-0 top-0 z-10 w-full backdrop-blur duration-300  ease-in"
@@ -55,36 +52,26 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             </SignedIn>
 
             <SignedOut>
-              <Button
-                className={cn(
-                  buttonVariants({ variant: "secondary", size: "sm" }),
-                  "m-1  px-5",
-                )}
-                onClick={() => {
-                  void router.push("/register");
-                }}
-              >
-                Register
-              </Button>
-              {/* <Button
+              <SignInButton>
+                <Button
                   className={cn(
                     buttonVariants({ variant: "secondary", size: "sm" }),
-                    "px-5  m-1 "
                   )}
-                  onClick={() => mb}
                 >
-              Apply as Bidder
-                </Button> */}
+                  Sign In
+                </Button>
+              </SignInButton>
 
-              {/* <Button
-                className={cn(
-                  buttonVariants({ variant: "secondary", size: "sm" }),
-                  "m-1  px-4",
-                )}
-                onClick={isSignedIn ? handleLogout : handleLogin}
-              >
-                {isSignedIn ? `Logout ${wallet.accountId}` : "Login"}
-              </Button> */}
+              <SignUpButton>
+                <Button
+                  className={cn(
+                    buttonVariants({ variant: "secondary", size: "sm" }),
+                    "ml-4",
+                  )}
+                >
+                  Sign Up
+                </Button>
+              </SignUpButton>
             </SignedOut>
           </nav>
         </div>

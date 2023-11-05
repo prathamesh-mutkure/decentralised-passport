@@ -125,7 +125,6 @@ export function VisaApplicationForm({
                       <Calendar
                         mode="single"
                         selected={field.value}
-                        // @ts-ignore
                         onSelect={field.onChange}
                         initialFocus
                       />
@@ -165,7 +164,6 @@ export function VisaApplicationForm({
                       <Calendar
                         mode="single"
                         selected={field.value}
-                        // @ts-ignore
                         onSelect={field.onChange}
                         initialFocus
                       />

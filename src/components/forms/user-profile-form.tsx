@@ -127,7 +127,6 @@ export function UserProfileForm({ className, ...props }: UserFormProps) {
                       <Calendar
                         mode="single"
                         selected={field.value}
-                        // @ts-ignore
                         onSelect={field.onChange}
                         initialFocus
                       />

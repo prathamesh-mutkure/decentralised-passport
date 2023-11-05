@@ -82,13 +82,17 @@ export default function Home() {
                 Say good bye to carrying multiple passports.
               </p>
               <div className="space-x-4">
-                <Button onClick={() => {}} size="lg" variant="default">
-                  Passport Holder
-                </Button>
+                <Link href="/dashboard/user">
+                  <Button size="lg" variant="default">
+                    Passport Holder
+                  </Button>
+                </Link>
 
-                <Button variant="outline" size="lg">
-                  Embassy/Consulate
-                </Button>
+                <Link href="/dashboard/admin">
+                  <Button variant="outline" size="lg">
+                    Embassy/Consulate
+                  </Button>
+                </Link>
               </div>
             </div>
 

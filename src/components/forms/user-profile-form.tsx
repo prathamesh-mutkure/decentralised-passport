@@ -21,7 +21,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Calendar } from "../ui/calendar";
 import { api } from "~/utils/api";
 
-interface UserFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+type UserFormProps = React.HTMLAttributes<HTMLDivElement>;
 
 const formSchema = z.object({
   dob: z.date(),
